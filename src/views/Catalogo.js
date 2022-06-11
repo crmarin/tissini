@@ -1,110 +1,132 @@
 /*eslint-disable*/
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { getcategories } from "../actions/userActions";
+import { Link } from "react-router-dom";
 
 export default function Index() {
   const dispatch = useDispatch();
+  const { id } = useParams();
 
-  // const { categories } = useSelector((state) => state.userLogin);
+  const { catalogo, vendor } = useSelector((state) => state.userLogin);
 
-  const catalogo = {}
-  let { id } = useParams();
+  let categories = {};
+  if (catalogo.categories) {
+    categories = catalogo.categories
+  }
+  let products = {};
+  if (vendor.products) {
+    products = vendor.products
+  }
 
   useEffect(() => {
-    dispatch(getcategories(id));
-  }, [useParams]);
+    if (id !== undefined) {
+      dispatch(getcategories(id));
+    }
+  }, [dispatch, id]);
 
+  console.log(products);
   return (
     <>
       <IndexNavbar fixed />
 
-      <div className="relative pt-32 pb-32 flex content-center items-center justify-center min-h-screen-75">
-        <div
-          className="absolute top-0 w-full h-full bg-center bg-cover"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80')",
-          }}
-        >
-          <span
-            id="blackOverlay"
-            className="w-full h-full absolute opacity-75 bg-black"
-          ></span>
-        </div>
-        <div className="container relative mx-auto">
-          <div className="items-center flex flex-wrap">
-            <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-              <div className="pr-12">
-                <h1 className="text-white font-semibold text-5xl">
-                 {id} Ea dolore eiusdfasdfsmod ea ad. Sint ipsum ut irure mollit dolor pariatur
-                </h1>
-                <p className="mt-4 text-lg text-blueGray-200">
-                  Ipsum ex mollit esse et consequat.
-                </p>
+      <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
+        {
+          categories && categories.length > 0 &&
+          (
+            <section className="pb-20 -mt-24">
+              <div className="container mx-auto px-4">
+
+                <div className="flex flex-wrap items-center mt-32">
+                  <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
+                    <h3 className="text-3xl mb-2 font-semibold leading-normal">
+                      {categories.name}
+                    </h3>
+                    <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">
+                      Mollit elit qui esse consectetur esse adipisicing ad incididunt incididunt ut qui sit.
+                      Ex non dolor et dolore sunt quis reprehenderit velit proident sit commodo consequat exercitation qui.
+                      Duis velit eiusmod do duis ea irure Lorem occaecat anim occaecat labore.
+                    </p>
+                  </div>
+
+                  <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
+                    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-lightBlue-500">
+                      <img
+                        alt="..."
+                        src={`https://v3.tissini.app${categories.image}`}
+                        className="w-full align-middle rounded-t-lg  inline-flex items-center justify-center"
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null; // prevents looping
+                          currentTarget.src = "https://static.thenounproject.com/png/3843803-200.png";
+                        }}
+                      ></img>
+                      <blockquote className="relative p-8 mb-4">
+                        <svg
+                          preserveAspectRatio="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 583 95"
+                          className="absolute left-0 w-full block h-95-px -top-94-px"
+                        >
+                          <polygon
+                            points="-30,95 583,95 583,65"
+                            className="text-lightBlue-500 fill-current"
+                          ></polygon>
+                        </svg>
+                        <h4 className="text-xl font-bold text-white capitalize">
+                          categoria {categories.category}
+                        </h4>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
-          style={{ transform: "translateZ(0)" }}
-        >
-          <svg
-            className="absolute bottom-0 overflow-hidden"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            version="1.1"
-            viewBox="0 0 2560 100"
-            x="0"
-            y="0"
-          >
-            <polygon
-              className="text-blueGray-200 fill-current"
-              points="2560 0 2560 100 0 100"
-            ></polygon>
-          </svg>
-        </div>
+            </section>
+          )
+        }
+
       </div>
 
       <section className="pb-20 bg-blueGray-200 -mt-24">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap">
 
-            {
-              catalogo.length > 0 &&
-              catalogo.map((item, id) => (
+              {
+                products && products.length > 0 &&
+                products.slice(0, 30).map((item, id) => (
 
-                  {/* <div className="w-full lg:w-2/12 px-4 text-center" key={id}>
+                  <div className="w-full lg:w-2/12 px-4 text-center" key={id}>
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                       <div className="px-4 py-5 flex-auto">
                         <h6 className="text-xl font-semibold">{item.name}</h6>
-                        <img
-                          alt="..."
-                          src={`https://v3.tissini.app${item.image}`}
-                          className="w-full align-middle rounded-t-lg  inline-flex items-center justify-center h-60"
-                          onError={({ currentTarget }) => {
-                            currentTarget.onerror = null; // prevents looping
-                            currentTarget.src="https://static.thenounproject.com/png/3843803-200.png";
-                          }}
+                        <Link
+                          to={`/catalogo/${item.id}`}
+                          className="text-blueGray-700 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+                        >
+                          <img
+                            alt="..."
+                            src={`https://v3.tissini.app${item.images[0].url}`}
+                            className="w-full align-middle rounded-t-lg  inline-flex items-center justify-center h-60"
+                            onError={({ currentTarget }) => {
+                              currentTarget.onerror = null; // prevents looping
+                              currentTarget.src = "https://static.thenounproject.com/png/3843803-200.png";
+                            }}
                           ></img>
-                        <p className="mt-2 mb-4 text-blueGray-500 capitalize">
-                          {item.category}
-                        </p>
+                          <p className="mt-2 mb-4 text-blueGray-500 capitalize">
+                            {item.reference}
+                          </p>
+                        </Link>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
 
-              ))}
-
+                ))}
+            </div>
           </div>
-
-        </div>
-      </section>
+        </section>
       <Footer />
     </>
   );

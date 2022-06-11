@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../actions/userActions';
+import { postlogin } from '../../actions/userActions';
 
 export default function Login() {
   const dispatch = useDispatch();
-  const {customer} = useSelector((state) => state.userLogin);
+  const {login} = useSelector((state) => state.userLogin);
 
   const [formData, setFormData] = useState({
     mobilephone: ''
@@ -14,7 +14,7 @@ export default function Login() {
 
   const { mobilephone } = formData;
 
-  if (customer) {
+  if (login) {
     return <Redirect to="/" />;
   }
 
@@ -25,7 +25,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(login(formData));
+    dispatch(postlogin(formData));
   };
 
   return (

@@ -16,14 +16,14 @@ import Index from "views/Index.js";
 import Catalogo from "views/Catalogo.js";
 import PrivateRoute from "PrivateRoute";
 import { USER_LOGOUT } from "constants/userConstants";
-import { login } from "actions/userActions";
+import { postlogin } from "actions/userActions";
 
 const App = () => {
 
   useEffect(() => {
 
     if (localStorage.mobilephone) {
-      store.dispatch(login({mobilephone: localStorage.mobilephone}));
+      store.dispatch(postlogin({mobilephone: localStorage.mobilephone}));
     }
 
     window.addEventListener('storage', () => {

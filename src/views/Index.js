@@ -10,8 +10,6 @@ export default function Index() {
 
   const { categories } = useSelector((state) => state.userLogin);
 
-  console.log(categories);
-
   return (
     <>
       <IndexNavbar fixed />
@@ -70,7 +68,7 @@ export default function Index() {
 
             {
               categories.length > 0 &&
-              categories.map((item, id) => (
+              categories.slice(0, 30).map((item, id) => (
 
                 item.parent_id && (
                 <div className="w-full lg:w-2/12 px-4 text-center" key={id}>
@@ -78,7 +76,7 @@ export default function Index() {
                     <div className="px-4 py-5 flex-auto">
                       <h6 className="text-xl font-semibold">{item.name}</h6>
                       <Link
-                        to={`/catalogo/${item.parent_id}`}
+                        to={`/catalogo/${item.id}`}
                         className="text-blueGray-700 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
                       >
                       <img
