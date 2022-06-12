@@ -15,15 +15,17 @@ import Auth from "layouts/Auth.js";
 import Index from "views/Index.js";
 import Catalogo from "views/Catalogo.js";
 import PrivateRoute from "PrivateRoute";
-import { USER_LOGOUT } from "constants/userConstants";
-import { postlogin } from "actions/userActions";
+import { USER_LOGOUT,USER_LOGIN_SUCCESS } from "constants/userConstants";
 
 const App = () => {
 
   useEffect(() => {
 
-    if (localStorage.mobilephone) {
-      store.dispatch(postlogin({mobilephone: localStorage.mobilephone}));
+    if (localStorage.customer) {
+      store.dispatch({
+        type: USER_LOGIN_SUCCESS,
+        payload: {customer: JSON.parse(localStorage.customer), categories: JSON.parse(localStorage.categories)}
+      });
     }
 
     window.addEventListener('storage', () => {

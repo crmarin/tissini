@@ -57,7 +57,8 @@ export const postlogin = (formData) => async (dispatch) => {
       payload: data
     });
 
-    localStorage.setItem("mobilephone", formData.mobilephone);
+    localStorage.setItem("customer", JSON.stringify(data.customer));
+    localStorage.setItem("categories", JSON.stringify(data.categories));
 
   } catch (err) {
     dispatch({
@@ -70,6 +71,6 @@ export const postlogin = (formData) => async (dispatch) => {
 // Logout
 export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
-  localStorage.removeItem('mobilephone');
+  localStorage.removeItem('customer');
   document.location.href = '/';
 };
