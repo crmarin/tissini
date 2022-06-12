@@ -5,15 +5,16 @@ import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { getcategories } from "../actions/userActions";
-import { Link } from "react-router-dom";
+import { getcategories, addCartTotal } from "../actions/userActions";
 
 export default function Index() {
+  let array = [];
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const [cart, setCart] = useState(0)
-  const { catalogo, vendor } = useSelector((state) => state.userLogin);
+  const { catalogo, vendor, cart : carrito } = useSelector((state) => state.userLogin);
+  const [cart, setCart] = useState(array)
+  const [total, setTotal] = useState(carrito)
 
   let categories = {};
   if (catalogo.categories) {
@@ -21,16 +22,26 @@ export default function Index() {
   }
   let products = {};
   if (vendor.products) {
-    products = vendor.products
-  }
+    vendor.products.map((item, id) => (
+      array[item.id] = 0
+      ))
+      products = vendor.products
+    }
 
-  const increment = () => {
-    // console.log('item :>> ', item);
-    setCart(cart+1);
+  const addcart = (e, item) => {
+    e.preventDefault();
+    item.cantidad = cart[item.id]
+    setTotal({...total, [item.id] : item});
   };
 
-  const decrement = () => {
-    setCart(cart-1);
+  const increment = (id) => {
+    setCart({ ...cart, [id]: isNaN(cart[id]) ? 0 : (Number(cart[id]) + 1) });
+  };
+
+  const decrement = (id) => {
+    setCart({ ...cart, [id]: isNaN(cart[id]) ? 0 : (Number(cart[id]) - 1) });
+    if(Number(cart[id]) < 0)
+    setCart({ ...cart, [id]: 0 });
   };
 
   useEffect(() => {
@@ -38,6 +49,14 @@ export default function Index() {
       dispatch(getcategories(id));
     }
   }, [dispatch, id]);
+
+  useEffect(() => {
+    setCart(array)
+  }, [vendor]);
+
+  useEffect(() => {
+    dispatch(addCartTotal(total));
+  }, [total]);
 
   return (
     <>
@@ -108,6 +127,7 @@ export default function Index() {
               products.slice(0, 30).map((item, id) => (
 
                 <div className="w-full lg:w-2/12 px-4 text-center" key={id}>
+                <form onSubmit={(e)=>addcart(e, item)} autoComplete="off">
                   <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                     <div className="px-4 py-5 flex-auto">
                       <h6 className="text-xl font-semibold">{item.name}</h6>
@@ -127,7 +147,7 @@ export default function Index() {
                         <button
                           className="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                           type="button"
-                          onClick={decrement}
+                          onClick={() => decrement(item.id)}
                         >
                           -
                         </button>
@@ -135,26 +155,25 @@ export default function Index() {
                           type="text"
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                           name="cart"
-                          value={cart}
-                          onChange={increment}
+                          value={cart[item.id]}
                         />
                         <button
                           className="bg-purple-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                           type="button"
-                          onClick={increment}
+                          onClick={() => increment(item.id)}
                         >
                           +
                         </button>
                       </div>
                       <button
-                          className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                          type="button"
-                          // disabled={disabled}
-                        >
-                          Add to Cart
-                        </button>
+                        className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                        type="submit"
+                      >
+                        Add to Cart
+                      </button>
                     </div>
                   </div>
+                </form>
                 </div>
 
               ))}

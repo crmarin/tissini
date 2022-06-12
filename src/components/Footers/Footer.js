@@ -66,7 +66,7 @@ export default function Footer() {
                   <ul className="list-unstyled">
                     <li>
                       <a
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 font-semibold block pb-2 text-sm"
                         href="https://www.creative-tim.com/presentation?ref=nr-footer"
                       >
                         About Us
@@ -74,7 +74,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <a
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 font-semibold block pb-2 text-sm"
                         href="https://blog.creative-tim.com?ref=nr-footer"
                       >
                         Blog
@@ -82,7 +82,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <a
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 font-semibold block pb-2 text-sm"
                         href="https://www.github.com/creativetimofficial?ref=nr-footer"
                       >
                         Github
@@ -90,7 +90,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <a
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 font-semibold block pb-2 text-sm"
                         href="https://www.creative-tim.com/bootstrap-themes/free?ref=nr-footer"
                       >
                         Free Products
@@ -105,7 +105,7 @@ export default function Footer() {
                   <ul className="list-unstyled">
                     <li>
                       <a
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 font-semibold block pb-2 text-sm"
                         href="https://github.com/creativetimofficial/notus-react/blob/main/LICENSE.md?ref=nr-footer"
                       >
                         MIT License
@@ -113,7 +113,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <a
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/terms?ref=nr-footer"
                       >
                         Terms & Conditions
@@ -121,7 +121,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <a
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/privacy?ref=nr-footer"
                       >
                         Privacy Policy
@@ -129,7 +129,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <a
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/contact-us?ref=nr-footer"
                       >
                         Contact Us

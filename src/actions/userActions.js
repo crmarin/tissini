@@ -7,7 +7,10 @@ import {
   CATEGORIES_SUCCESS,
   CATEGORIES_FAIL,
   VENDOR_SUCCESS,
-  VENDOR_FAIL
+  VENDOR_FAIL,
+  ADD_CART,
+  REMOVE_CART,
+  CART_FAIL
 } from '../constants/userConstants';
 
 // POST - Login User
@@ -29,6 +32,7 @@ export const getcategories = (id) => async (dispatch) => {
     });
   }
 };
+
 // POST - Login User
 export const getvendor = (id) => async (dispatch) => {
   try {
@@ -48,6 +52,44 @@ export const getvendor = (id) => async (dispatch) => {
 };
 
 // POST - Login User
+export const addCartTotal = (data) => (dispatch) => {
+  try {
+
+    dispatch({
+      type: ADD_CART,
+      payload: data
+    });
+
+    localStorage.setItem("cart", JSON.stringify(data));
+
+  } catch (err) {
+    dispatch({
+      type: CART_FAIL,
+      payload: 'fail add cart'
+    });
+  }
+};
+
+// POST - Login User
+export const removeCart = () => (dispatch) => {
+  try {
+
+    dispatch({
+      type: REMOVE_CART,
+      payload: {}
+    });
+
+    localStorage.setItem("cart", JSON.stringify({}));
+    
+  } catch (err) {
+    dispatch({
+      type: CART_FAIL,
+      payload: 'fail remove cart'
+    });
+  }
+};
+
+// POST - Login User
 export const postlogin = (formData) => async (dispatch) => {
   try {
     const { data } = await api.post('/login/client', formData);
@@ -59,6 +101,7 @@ export const postlogin = (formData) => async (dispatch) => {
 
     localStorage.setItem("customer", JSON.stringify(data.customer));
     localStorage.setItem("categories", JSON.stringify(data.categories));
+    localStorage.setItem("cart", JSON.stringify({}));
 
   } catch (err) {
     dispatch({
